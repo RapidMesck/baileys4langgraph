@@ -1,0 +1,37 @@
+{
+  "name": "baileys4langgraph",
+  "version": "1.0.0",
+  "description": "This project aims to robustly and efficiently integrate a LangGraph AI agent with whatsapp using Baileys",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js | pino-pretty",
+    "dev": "ts-node src/index.ts | pino-pretty"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RapidMesck/baileys4langgraph.git"
+  },
+  "keywords": [],
+  "author": "RapidMesck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RapidMesck/baileys4langgraph/issues"
+  },
+  "homepage": "https://github.com/RapidMesck/baileys4langgraph#readme",
+  "devDependencies": {
+    "@types/qrcode-terminal": "^0.12.2",
+    "pino-pretty": "^13.0.0",
+    "prisma": "^6.10.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@langchain/langgraph-sdk": "^0.0.87",
+    "@prisma/client": "^6.10.1",
+    "baileys": "^6.7.18",
+    "dotenv": "^17.0.0",
+    "pino": "^9.7.0",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
