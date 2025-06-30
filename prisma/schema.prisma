@@ -10,9 +10,11 @@ datasource db {
 model Users {
   id String @id @default(cuid())
   remoteJid String[]
-  metadata  Json?
+  metadata  Json?    @default("{}")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  messages Messages[]
 
   @@index([remoteJid])
   @@map("users")
@@ -20,11 +22,14 @@ model Users {
 
 model Messages {
   id String @id @default(cuid())
+  userId   String
+  user     Users   @relation(fields: [userId], references: [id])
   remoteJid String
   content   String
-  dataJson  Json
+  dataJson  Json     @default("{}")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([userId, remoteJid])
   @@map("messages")
 }
