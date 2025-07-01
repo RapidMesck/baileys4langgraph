@@ -15,6 +15,7 @@ model Users {
   updatedAt DateTime @updatedAt
 
   messages Messages[]
+  threads UsersThreads[]
 
   @@index([remoteJid])
   @@map("users")
@@ -32,4 +33,17 @@ model Messages {
 
   @@index([userId, remoteJid])
   @@map("messages")
+}
+
+model UsersThreads {
+  id String @id @default(cuid())
+  userId String
+  user Users @relation(fields: [userId], references: [id])
+  threadId String
+  lastInput String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([threadId, userId])
+  @@map("usersThreads")
 }

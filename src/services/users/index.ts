@@ -23,6 +23,12 @@ export async function getUserByRemoteJid(remoteJid: string): Promise<Users | nul
   });
 }
 
+export async function getOrCreateUser(remoteJid: string, metadata?: any): Promise<Users> {
+    let user = await getUserByRemoteJid(remoteJid);
+    if (user) return user;
+    return createUser(remoteJid, metadata);
+}
+
 export async function updateUser(id: string, data: Partial<Users>): Promise<Users> {
   // Map metadata to Prisma.DbNull if it's null
   const updateData = {

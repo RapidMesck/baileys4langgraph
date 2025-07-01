@@ -9,6 +9,8 @@ import qrcode from 'qrcode-terminal';
 import P from 'pino';
 import dotenv from 'dotenv';
 import { logger } from './utils/logger';
+import { getOrCreateUser } from './services/users';
+import { createMessage } from './services/messages';
 
 dotenv.config();
 
@@ -43,12 +45,15 @@ async function main(): Promise<void> {
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0];
     if (!msg.message || msg.key.fromMe) return;
-
     const sender = msg.key.remoteJid!;
     const content: string | undefined =
       (msg.message.conversation ||
         (msg.message.extendedTextMessage?.text ?? '') ||
         (msg.message.imageMessage?.caption ?? '')).trim();
+
+    const user = await getOrCreateUser(sender, {})
+    const message = await createMessage(user.id, sender, content, msg)
+
     
     logger.info(`📩 Received message from ${sender}: ${content}`);
   });
